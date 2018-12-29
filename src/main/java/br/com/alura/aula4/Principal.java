@@ -1,8 +1,5 @@
 package br.com.alura.aula4;
 
-import java.util.List;
-import java.util.Vector;
-
 public class Principal {
 
 	public static void main(String[] args) {
@@ -11,7 +8,10 @@ public class Principal {
 		// instancie um ArrayList - q será compartilhado pelas thread abaixo;
 		// List<String> lista = new ArrayList<String>();// ArrayList não é thread safe
 
-		List<String> lista = new Vector<String>();// thread safe
+		// List<String> lista = new Vector<String>();// thread safe
+
+		// utilizando alista caseira
+		Lista lista = new Lista();
 
 		for (int i = 0; i < 10; i++) {
 
@@ -20,11 +20,18 @@ public class Principal {
 		}
 
 		// imprima todos os elementos da lista;
-		for (int i = 0; i < 100; i++) {
+		/*
+		 * for (int i = 0; i < 100; i++) {
+		 * 
+		 * System.out.println(lista.pegarElemento(i));
+		 * 
+		 * }
+		 */
 
-			System.out.println(lista.get(i));
-
-		}
+		// substituição da impressão por uma thread. Nos testes, uma adição demora mais
+		// que a impressão. Causando exceptions. o thread que imprime deve esperar até
+		// que a lista realmente esteja preenchida
+		new Thread(new TarefaImprimir(lista)).start();
 
 	}
 
